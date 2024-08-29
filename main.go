@@ -12,5 +12,5 @@ func ServiceName(name string) string {
 
 func main(){ 
 	fmt.Printf("Running project %s\n", APP_NAME )
-	fmt.Println("Hello from Go Mod one")
+	fmt.Printf("Hello from %s", ServiceName(""))
 }
