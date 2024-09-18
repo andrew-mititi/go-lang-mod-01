@@ -1,16 +1,33 @@
 package main
 
-import (
-	"fmt"
-
-	utils_helpers "github.com/andrew-mititi/go-lang-mod-01/utils-helpers"
-)
-
 const APP_NAME string = "golang module 1"
 
 
+type engine struct {
+	electric bool
+}
+
+type Vehicle struct {
+	engine
+	model, color,make string
+
+}
+
 
 func main(){ 
-	fmt.Printf("Running project %s\n", APP_NAME )
-	fmt.Printf("Hello from %s\n", utils_helpers.ServiceName(APP_NAME))
+
+	japan_vehicle := Vehicle{
+		engine: engine{
+			electric: false,
+		},
+		model: "WRX STI",
+		color: "blue",
+		make: "Subaru",
+	}
+
+	_ = japan_vehicle
+
+
+	// functions
+
 }
