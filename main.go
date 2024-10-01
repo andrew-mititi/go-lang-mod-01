@@ -77,10 +77,11 @@ _ = Square{
  _ = returnFunc(1)
 
 
- func(f func()){
-	fmt.Println("Done Process the data.....")
-    f()
- }(sendToQueue)
+//  func(f func()){
+// 	fmt.Println("Done Process the data.....")
+//     f()
+//  }(sendToQueue)
+run()
 
 }
 
@@ -108,11 +109,5 @@ func returnFunc(num int) func() int{
 func sendToQueue(){
 	fmt.Println("Sent data to queue")
 }
-// func subtract(a, b int) int{
-// 	return a - b
-// }
 
-// func doMath(a, b int, f func(int, int) int) int {
-//   return f(a, b)
-// }
 
