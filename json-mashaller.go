@@ -61,6 +61,7 @@ func run() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	sort.Sort(byAge(users_array))
 	fmt.Println(users_array)
 }
