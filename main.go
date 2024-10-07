@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/andrew-mititi/go-lang-mod-01/concurrency"
 	"math"
+
+	"github.com/andrew-mititi/go-lang-mod-01/concurrency"
 )
 
 const APP_NAME string = "golang module 1"
@@ -80,7 +81,7 @@ func main() {
 	//     f()
 	//  }(sendToQueue)
 	//run()
-	concurrency.RunRoutines()
+	concurrency.RunMethodSets()
 }
 
 func foo(number ...int) int {
