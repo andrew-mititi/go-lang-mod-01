@@ -24,5 +24,5 @@ func RunMethodSets(){
         name: "Andrew",
     }
 
-    saySomething(&p)
+    p.speak()
 }
