@@ -81,7 +81,7 @@ func main() {
 	//     f()
 	//  }(sendToQueue)
 	//run()
-	concurrency.RunMethodSets()
+	concurrency.RunIncrementor()
 }
 
 func foo(number ...int) int {
