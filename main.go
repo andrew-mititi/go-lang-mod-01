@@ -1,6 +1,11 @@
 package main
 
-import "github.com/andrew-mititi/go-lang-mod-01/concurrency"
+import (
+	"fmt"
+	"runtime"
+
+	"github.com/andrew-mititi/go-lang-mod-01/concurrency"
+)
 
 const APP_NAME string = "golang module 1"
 
@@ -29,5 +34,6 @@ func main() {
 	// ps.firstname = "Mititi"
 	// fmt.Println(persons["andrew"].firstname)
 	concurrency.RunIncrementor()
+	fmt.Println(runtime.GOOS)
 }
 
