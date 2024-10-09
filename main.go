@@ -1,11 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"runtime"
-
-	"github.com/andrew-mititi/go-lang-mod-01/concurrency"
-)
+import "github.com/andrew-mititi/go-lang-mod-01/channels"
 
 const APP_NAME string = "golang module 1"
 
@@ -33,7 +28,7 @@ func main() {
 	// fmt.Println(ps.firstname)
 	// ps.firstname = "Mititi"
 	// fmt.Println(persons["andrew"].firstname)
-	concurrency.RunIncrementor()
-	fmt.Println(runtime.GOOS)
+	// concurrency.RunIncrementor()
+	channels.RunChannels()
 }
 
