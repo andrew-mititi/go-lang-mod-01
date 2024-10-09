@@ -1,34 +1,25 @@
 package main
 
-import "github.com/andrew-mititi/go-lang-mod-01/channels"
+import (
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/andrew-mititi/go-lang-mod-01/channels"
+)
 
 const APP_NAME string = "golang module 1"
 
-type Person struct {
-	firstname string
-	age       int
-}
 
-type personMap map[string]*Person
-
-var persons = personMap{
-	"andrew": &Person{
-		firstname: "Andrew",
-		age: 26,
-	},
-}
-
-// func (p Person) speak() {
-	
-
-// }
 
 func main() {
-	// ps := persons["andrew"]
-	// fmt.Println(ps.firstname)
-	// ps.firstname = "Mititi"
-	// fmt.Println(persons["andrew"].firstname)
-	// concurrency.RunIncrementor()
-	channels.RunChannels()
+	http.HandleFunc("/hello", channels.HandleHello)
+	http.HandleFunc("/search", channels.HandleSearch)
+
+	fmt.Println("Server listening on port 9000")
+	log.Fatal(http.ListenAndServe("localhost:9000", nil))
+
+	
+	
 }
 
