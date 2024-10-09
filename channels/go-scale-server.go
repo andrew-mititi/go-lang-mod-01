@@ -23,32 +23,66 @@ type Response struct {
 type SearchFunc func(query string) Result
 
 var (
-	Web = FakeSearch("web", "The Go Programming language", "Https://golang.com")
-	Image = FakeSearch("image", "The gopher", "Https://golang.png")
-	Youtube = FakeSearch("video", "Introduction to Golang", "Https://wwww.youtube.com/watch?v=some-video")
+	Web1 = FakeSearch("web1", "The Go Programming language", "Https://golang.com")
+	Web2 = FakeSearch("web2", "The Go Programming language", "Https://golang.com")
+	Image1 = FakeSearch("image1", "The gopher", "Https://golang.png")
+	Image2 = FakeSearch("image2", "The gopher", "Https://golang.png")
+	Youtube1 = FakeSearch("video1", "Introduction to Golang", "Https://wwww.youtube.com/watch?v=some-video")
+	Youtube2 = FakeSearch("video2", "Introduction to Golang", "Https://wwww.youtube.com/watch?v=some-video")
+)
+
+var (
+	replicatedWeb = First(Web1, Web2)
+	replicatedVideo = First(Youtube1, Youtube2)
+	replicatedImage = First(Image1, Image2)
 )
 
 func First(replicas ...SearchFunc) SearchFunc{
 	return func(query string) Result {
 		c := make(chan Result, len(replicas));
 
+		 sub_search := func(i int){
+          c <- replicas[i](query)
+		 }
 
 		for i := range replicas {
-         go func(){
-			res := replicas[i](query)
-			c <- res
-		 }()
-		}
+          go sub_search(i)
+		}	
+	//  return the first results from the channel and discard the rest even if they are not ready
     return <-c
 	}
 }
 
+
+
 func Search(query string, timeout time.Duration) ([]Result, error){
 	resultschan := make (chan Result)
 	timer := time.After(timeout)
-    go func(){ resultschan <- Web("Golang")}()
-	go func(){ resultschan <- Youtube("Golang")}()
-	go func(){ resultschan <- Image("Golang")}()
+    go func(){ resultschan <- Web1("Golang")}()
+	go func(){ resultschan <- Youtube1("Golang")}()
+	go func(){ resultschan <- Image1("Golang")}()
+
+	var results []Result
+
+	for i := 0; i < 3; i++ {
+     select {
+	 case result := <-resultschan:
+	   results = append(results, result)
+	 case <-timer:
+		return results, errors.New("Timed out")
+
+	 }
+	} 
+	return results, nil
+}
+
+
+func SearchReplicated(query string, timeout time.Duration) ([]Result, error){
+	resultschan := make (chan Result)
+	timer := time.After(timeout)
+    go func(){ resultschan <- replicatedWeb(query)}()
+	go func(){ resultschan <- replicatedVideo(query)}()
+	go func(){ resultschan <- replicatedImage(query)}()
 
 	var results []Result
 
@@ -90,7 +124,7 @@ func HandleSearch(w http.ResponseWriter, req *http.Request){
 
 	start := time.Now()
 
-    resp, err := Search("golang", 80*time.Millisecond)
+    resp, err := SearchReplicated("golang", 80*time.Millisecond)
    if(err != nil) {
 	 http.Error(w, err.Error(), http.StatusInternalServerError)
    }

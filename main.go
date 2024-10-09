@@ -19,6 +19,8 @@ func main() {
 	fmt.Println("Server listening on port 9000")
 	log.Fatal(http.ListenAndServe("localhost:9000", nil))
 
+	// channels.RunChannels()
+
 	
 	
 }
