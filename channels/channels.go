@@ -3,26 +3,43 @@ package channels
 import (
 	"fmt"
 	"math/rand"
+	"sync"
 	"time"
 )
 
 
 
-func chanTest() int{
-	c := make(chan int)
+var wg sync.WaitGroup
 
-	populate := func(i int){
-		time.Sleep(time.Duration(rand.Intn(500)) * time.Millisecond)
-		// c <- i
-	}
-	for i := 0; i < 3; i++ {
-		go populate(i)
-	}
-	fmt.Println(<-c)
-	return <-c
-}
+
 
 func RunChannels(){
-chanTest()
+  ch := gen(1,2,3,4)
+  for n := range ch {   // Read values from the channel until it is closed
+	fmt.Println(n)
+}
 }
 
+
+func gen(nums ...int) <-chan int {
+   
+	out := make(chan int)
+
+	inter_gen := func(i int){
+		defer wg.Done()
+		time.Sleep(time.Duration(rand.Intn(5)) * time.Second)
+		out <- i
+	}
+
+	for _, n := range nums {
+		wg.Add(1)	
+		go inter_gen(n)
+	}
+
+	go func() {
+		wg.Wait()            // Wait for all goroutines to finish
+		close(out)           // Close the channel after all sends are done
+	}()
+    fmt.Println("Gen function done running")
+	return out
+}
