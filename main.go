@@ -1,10 +1,10 @@
 package main
 
-import "github.com/andrew-mititi/go-lang-mod-01/channels"
+import (
+	"github.com/andrew-mititi/go-lang-mod-01/ctx"
+)
 
 const APP_NAME string = "golang module 1"
-
-
 
 func main() {
 	// http.HandleFunc("/hello", channels.HandleHello)
@@ -13,9 +13,6 @@ func main() {
 	// fmt.Println("Server listening on port 9000")
 	// log.Fatal(http.ListenAndServe("localhost:9000", nil))
 
-	channels.RunChannels()
+	ctx.RunContext()
 
-	
-	
 }
-
