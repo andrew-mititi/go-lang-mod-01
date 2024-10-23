@@ -5,35 +5,31 @@ import (
 	"time"
 )
 
-type Ball struct {
-	hits int
+
+
+type Item struct {
+	Title, Channel, GUID string
+}
+
+type Fetcher interface {
+	Fetch() (items []Item, next time.Time, err error)
+}
+
+func (i Item) Fetch() (items []Item, next time.Time, err error){
+  return nil, time.Now(), nil
+}
+
+
+
+func Fetch(uri string) Fetcher {
+	i := new(Item)
+	return *i
 }
 
 
 func RunAdvancedConcurrency(){
-
-	table := make(chan *Ball)
-
-	go player("ping", table)
-	go player("pong", table)
-
-	table <- new(Ball)
-
-	time.Sleep(1 * time.Second)
-
-	<-table
-    panic("Run away goroutines")
-
-
+fmt.Println(time.Now())
 }
 
 
-func player(name string, table chan *Ball){
-	for {
-		ball := <-table
-		ball.hits++
-		fmt.Println(name, ball.hits)
-		time.Sleep(100 * time.Millisecond)
-		table <- ball
-	}
-}
+
