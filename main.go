@@ -1,8 +1,6 @@
 package main
 
-import (
-	"github.com/andrew-mititi/go-lang-mod-01/ctx"
-)
+import "github.com/andrew-mititi/go-lang-mod-01/concurrency"
 
 const APP_NAME string = "golang module 1"
 
@@ -12,7 +10,5 @@ func main() {
 
 	// fmt.Println("Server listening on port 9000")
 	// log.Fatal(http.ListenAndServe("localhost:9000", nil))
-
-	ctx.RunContext()
-
+  concurrency.RunAdvancedConcurrency()
 }
