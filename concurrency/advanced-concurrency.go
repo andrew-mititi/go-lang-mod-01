@@ -22,7 +22,7 @@ func RunAdvancedConcurrency(){
 	time.Sleep(1 * time.Second)
 
 	<-table
-
+    panic("Run away goroutines")
 
 
 }
